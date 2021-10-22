@@ -32,6 +32,8 @@ class C_Render:
 		# lista de pontos, lista de faces, tupla de ângulos de rotação, tupla de posição, tupla de escala
 		self.Object = [self.listPointCube, CubeTest.CuboFace, [0.0, 0, 0], [0, 0, 0], [1.0, 1.0, 1.0]]
 
+		self.increaseDT = 0.0
+
 	def update(self, deltaTime):
 		'''
 			Função responsável por atualizar os objetos na tela
@@ -43,6 +45,10 @@ class C_Render:
 		self.Object[2][0] += deltaTime * 0.01
 		self.Object[2][1] += deltaTime * 0.01
 		self.Object[2][2] += deltaTime * 0.01
+
+		self.increaseDT += deltaTime * 0.001
+
+		self.Object[4][0] = self.Object[4][1] = self.Object[4][2] = np.abs(np.cos(self.increaseDT)) + .5
 
 	def render(self, screen):
 		'''
