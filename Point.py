@@ -1,6 +1,7 @@
 '''
 	Módulo C_Point
 	C_Point é a Classe Responsável para a Manipulação de Pontos na Tela
+	Créditos: Lucas Campos Achcar
 '''
 
 import pygame

@@ -1,6 +1,7 @@
 '''
 	Módulo C_Render
 	C_Render é a Classe para a renderização dos objetos na tela
+	Créditos: Lucas Campos Achcar
 '''
 
 import pygame

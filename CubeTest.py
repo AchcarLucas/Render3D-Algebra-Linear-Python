@@ -1,3 +1,8 @@
+'''
+	File de Teste - Cubo 3D
+	Créditos: Lucas Campos Achcar
+'''
+
 CubePoint = [
                 # 0
                 [1, 1, 1], 
