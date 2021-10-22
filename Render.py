@@ -23,15 +23,15 @@ class C_Render:
 
 		self.screenSize = pygame.display.get_window_size()
 
-		self.listPointCube = []
+		self.listVerticesCube = []
 
 		self.linearTransform = LinearTransform.C_LinearTransform(cam=[0, 0, 0])
 
-		for p in CubeTest.CubePoint:
-			self.listPointCube.append(Point.C_Point(p, self.linearTransform.factor, (255, 255, 255)))
+		for p in CubeTest.CubeVertices:
+			self.listVerticesCube.append(Point.C_Point(p, self.linearTransform.factor, (255, 255, 255)))
 
 		# lista de pontos, lista de faces, tupla de ângulos de rotação, tupla de posição, tupla de escala
-		self.Object = [self.listPointCube, CubeTest.CuboFace, [0.0, 0, 0], [0, 0, 0], [1.0, 1.0, 1.0]]
+		self.Object = [self.listVerticesCube, CubeTest.CuboFace, [0.0, 0, 0], [0, 0, 0], [1.0, 1.0, 1.0]]
 
 		self.increaseDT = 0.0
 

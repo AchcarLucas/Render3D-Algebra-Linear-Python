@@ -3,7 +3,7 @@
 	Créditos: Lucas Campos Achcar
 '''
 
-CubePoint = [
+CubeVertices = [
                 # 0
                 [1, 1, 1], 
                 # 1
@@ -68,8 +68,8 @@ CuboFace    =   [
             ]
 
 print('Python File Cube Test')
-print('========== Cube Point ===========')
-print(CubePoint)
+print('========== Cube Vertices ===========')
+print(CubeVertices)
 print('========== Cube Face ===========')
 print(CuboFace)
 print('=====================')
