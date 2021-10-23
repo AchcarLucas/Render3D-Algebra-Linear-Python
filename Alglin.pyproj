@@ -31,6 +31,9 @@
     <Compile Include="Matrices.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="SphereTest.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Point.py">
       <SubType>Code</SubType>
     </Compile>

@@ -9,7 +9,9 @@ import numpy as np
 import Matrices as mtc
 import LinearTransform
 import Point
+
 import CubeTest
+import SphereTest
 
 class C_Render:
 	def __init__(self):
@@ -24,14 +26,21 @@ class C_Render:
 		self.screenSize = pygame.display.get_window_size()
 
 		self.listVerticesCube = []
+		self.listVerticesSphere = []
 
 		self.linearTransform = LinearTransform.C_LinearTransform(cam=[0, 0, 0])
 
 		for p in CubeTest.CubeVertices:
-			self.listVerticesCube.append(Point.C_Point(p, self.linearTransform.factor, (255, 255, 255)))
+			self.listVerticesCube.append(Point.C_Point(p, self.linearTransform.factor, (255, 255, 255), scale = 2.0))
 
-		# lista de pontos, lista de faces, tupla de ângulos de rotação, tupla de posição, tupla de escala
-		self.Object = [self.listVerticesCube, CubeTest.CuboFace, [0.0, 0, 0], [0, 0, 0], [1.0, 1.0, 1.0]]
+		for p in SphereTest.SphereVertices:
+			self.listVerticesSphere.append(Point.C_Point(p, self.linearTransform.factor, (255, 255, 255), scale = 1.0))
+
+		# lista de pontos, lista de faces, tupla de ângulos de rotação, tupla de posição, tupla de escala, if render point, if render line, len face
+		self.Cube = [self.listVerticesCube, CubeTest.CubeFace, [0.0, 0, 0], [0, 0, 0], [1.0, 1.0, 1.0], False, True, len(CubeTest.CubeFace)]
+		self.Sphere = [self.listVerticesSphere, SphereTest.SphereFace, [0.0, 0, 0], [0, 0, 0], [2.0, 2.0, 2.0], False, True, len(SphereTest.SphereFace)]
+
+		self.Object = self.Sphere
 
 		self.increaseDT = 0.0
 
@@ -47,9 +56,9 @@ class C_Render:
 		self.Object[2][1] += deltaTime * 0.01
 		self.Object[2][2] += deltaTime * 0.01
 
-		self.increaseDT += deltaTime * 0.001
+		#self.increaseDT += deltaTime * 0.001
 
-		self.Object[4][0] = self.Object[4][1] = self.Object[4][2] = np.abs(np.cos(self.increaseDT)) + .5
+		#self.Object[4][0] = self.Object[4][1] = self.Object[4][2] = np.abs(np.cos(self.increaseDT)) + .5
 
 	def render(self, screen):
 		'''
@@ -60,7 +69,7 @@ class C_Render:
 				None
 		'''
 
-		# DESENHA OS PONTOS PRIMEIRO
+		# matriz identidade 4x4
 		MVP = mtc.C_Matrix.identity(4)
 
 		# faz a transformação de rotação camera
@@ -68,48 +77,47 @@ class C_Render:
 		MVP = self.linearTransform.rotateZ(MVP, self.linearTransform.cam[1])
 		MVP = self.linearTransform.rotateX(MVP, self.linearTransform.cam[2])
 
-		# Cube Point
+		# faz a transformação de rotação do objeto
+		MVP = self.linearTransform.rotateY(MVP, self.Object[2][0])
+		MVP = self.linearTransform.rotateZ(MVP, self.Object[2][1])
+		MVP = self.linearTransform.rotateX(MVP, self.Object[2][2])
+
+		# faz a transformação da escala
+		MVP = self.linearTransform.scaleXYZ(MVP, self.Object[4])
+
+		# faz a transformação da translação
+		MVP = self.linearTransform.translateXYZ(MVP, self.Object[3])
+
+		# faz a transformação perspectiva
+		MVP = self.linearTransform.perspectiveProjection(MVP)
+
+		# Render Vertices
 		for p in self.Object[0]:
-			# faz uma cópia das transformações da câmera (é comum a todos os pontos)
-			T_MVP = MVP.copy()
-			
-			# faz a transformação de rotação do objeto
-			T_MVP = self.linearTransform.rotateY(T_MVP, self.Object[2][0])
-			T_MVP = self.linearTransform.rotateZ(T_MVP, self.Object[2][1])
-			T_MVP = self.linearTransform.rotateX(T_MVP, self.Object[2][2])
-
-			# faz a transformação da escala
-			T_MVP = self.linearTransform.scaleXYZ(T_MVP, self.Object[4])
-
-			# faz a transformação da translação
-			T_MVP = self.linearTransform.translateXYZ(T_MVP, self.Object[3])
-
-			# faz a transformação perspectiva
-			T_MVP = self.linearTransform.perspectiveProjection(T_MVP)
 
 			# transforma o ponto
-			P = mtc.C_Matrix.mul(T_MVP, p.getCopyPoint())
+			P = mtc.C_Matrix.mul(MVP, p.getCopyPoint())
 
 			# faz o setting do novo ponto para dentro do objeto Point
 			p.setPoint(P)
 
 			# renderiza o ponto
-			p.render(screen)
+			if(self.Object[5]):
+				p.render(screen)
 
-		# Cube Face
-		for face in self.Object[1]:
-			len_face = len(face)
-			for index in range(0, len(face)):
-				first_point = face[index % len_face]
-				second_point = face[(index + 1) % len_face]
+		if(self.Object[6]):
+			for face in self.Object[1]:
+				len_face = len(face)
+				for index in range(0, len_face):
+					first_point = face[index]
+					second_point = face[(index + 1) % len_face]
 
-				pygame.draw.line(screen, (255, 255, 255), 
-						(
-							self.Object[0][first_point].getScreenX(),
-							self.Object[0][first_point].getScreenY()
-						), 
-						(
-							self.Object[0][second_point].getScreenX(),
-							self.Object[0][second_point].getScreenY()
-						)
-						)
+					pygame.draw.line(screen, (255, 255, 255), 
+								(
+									self.Object[0][first_point].getScreenX(),
+									self.Object[0][first_point].getScreenY()
+								), 
+								(
+									self.Object[0][second_point].getScreenX(),
+									self.Object[0][second_point].getScreenY()
+								)
+							)
