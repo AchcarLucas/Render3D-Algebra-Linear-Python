@@ -30,7 +30,7 @@ class C_Render:
 		self.listVerticesSphere = []
 		self.listVerticesMonkey = []
 
-		self.linearTransform = LinearTransform.C_LinearTransform(cam=[0, 180, 0])
+		self.linearTransform = LinearTransform.C_LinearTransform(cam=[0, 180.0, 0])
 
 		for p in CubeTest.CubeVertices:
 			self.listVerticesCube.append(Point.C_Point(p, self.linearTransform.factor, (255, 255, 255), scale = 1.0))
@@ -58,11 +58,11 @@ class C_Render:
 			Return:
 				None
 		'''
-		#self.Object[2][0] += deltaTime * 0.01
-		#self.Object[2][1] += deltaTime * 0.01
-		#self.Object[2][2] += deltaTime * 0.01
+		self.Object[2][0] += deltaTime * 0.01
+		self.Object[2][1] += deltaTime * 0.01
+		self.Object[2][2] += deltaTime * 0.01
 
-		#self.increaseDT += deltaTime * 0.001
+		self.increaseDT += deltaTime * 0.001
 
 		#self.Object[4][0] = self.Object[4][1] = self.Object[4][2] = np.abs(np.cos(self.increaseDT)) + .5
 

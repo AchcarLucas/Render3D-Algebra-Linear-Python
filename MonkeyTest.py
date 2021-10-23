@@ -16,9 +16,9 @@ for index in range(0, len(MonkeyVerticesGross), 3):
 for index in range(0, len(MonkeyFaceGross), 3):
     MonkeyFace.append([MonkeyFaceGross[index], MonkeyFaceGross[index + 1], MonkeyFaceGross[index + 2]])
 
-print('Python File Sphere Test')
-print('========== Sphere Vertices ===========')
+print('Python File Monkey Test')
+print('========== Monkey Vertices ===========')
 print(MonkeyVertices)
-print('========== Sphere Face ===========')
+print('========== Monkey Face ===========')
 print(MonkeyFace)
 print('=====================')
