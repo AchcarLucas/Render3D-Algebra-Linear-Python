@@ -12,6 +12,7 @@ import Point
 
 import CubeTest
 import SphereTest
+import MonkeyTest
 
 class C_Render:
 	def __init__(self):
@@ -27,20 +28,25 @@ class C_Render:
 
 		self.listVerticesCube = []
 		self.listVerticesSphere = []
+		self.listVerticesMonkey = []
 
 		self.linearTransform = LinearTransform.C_LinearTransform(cam=[0, 0, 0])
 
 		for p in CubeTest.CubeVertices:
-			self.listVerticesCube.append(Point.C_Point(p, self.linearTransform.factor, (255, 255, 255), scale = 2.0))
+			self.listVerticesCube.append(Point.C_Point(p, self.linearTransform.factor, (255, 255, 255), scale = 1.0))
 
 		for p in SphereTest.SphereVertices:
 			self.listVerticesSphere.append(Point.C_Point(p, self.linearTransform.factor, (255, 255, 255), scale = 1.0))
 
+		for p in MonkeyTest.MonkeyVertices:
+			self.listVerticesMonkey.append(Point.C_Point(p, self.linearTransform.factor, (255, 255, 255), scale = 1.0))
+
 		# lista de pontos, lista de faces, tupla de ângulos de rotação, tupla de posição, tupla de escala, if render point, if render line, len face
 		self.Cube = [self.listVerticesCube, CubeTest.CubeFace, [0.0, 0, 0], [0, 0, 0], [1.0, 1.0, 1.0], False, True, len(CubeTest.CubeFace)]
 		self.Sphere = [self.listVerticesSphere, SphereTest.SphereFace, [0.0, 0, 0], [0, 0, 0], [2.0, 2.0, 2.0], False, True, len(SphereTest.SphereFace)]
+		self.Monkey = [self.listVerticesMonkey, MonkeyTest.MonkeyFace, [0.0, 0, 0], [0, 0, 0], [2.0, 2.0, 2.0], False, True, len(MonkeyTest.MonkeyFace)]
 
-		self.Object = self.Sphere
+		self.Object = self.Monkey
 
 		self.increaseDT = 0.0
 
