@@ -45,10 +45,10 @@ class C_LinearTransform:
 			T_x(x, y, z, w) = (x, y*cos(Theta) - z*sin(Theta), y*sin(Theta) + z*cos(Theta), 0)
 			
 			
-								| 1			0				0	  			0 |			|	x	|
-			T(x, y, z, w)	=	| 0			cos(Theta)		-sen(Theta) 	0 | 	* 	|	y	|
-								| 0			sin(Theta)		cos(Theta)		0 |			|	z	|
-								| 0			0				0 				1 |			|	0	|
+								| 1			0				0	  			0 |	
+			T(x, y, z, w)	=	| 0			cos(Theta)		-sen(Theta) 	0 | 	* 	M
+								| 0			sin(Theta)		cos(Theta)		0 |
+								| 0			0				0 				1 |
 						
 						
 			Entrada (Input): Matriz 4 x 1 e ângulo
@@ -82,10 +82,10 @@ class C_LinearTransform:
 			T_y(x, y, z, w) = (x*cos(Theta) - z*sin(Theta), y, x*sin(Theta) + z*cos(Theta), 0)
 			
 			
-							| cos(Theta)	0		-sen(Theta)		0 |			|	x	|
-			T(x, y, z)	=	| 0				1		0				0 |		*	|	y	|
-							| sin(Theta)	0		cos(Theta)		0 |			|	z	|
-							| 0				0		0				1 |			|	0	|
+							| cos(Theta)	0		-sen(Theta)		0 |
+			T(x, y, z)	=	| 0				1		0				0 |		*	M
+							| sin(Theta)	0		cos(Theta)		0 |
+							| 0				0		0				1 |
 						
 						
 			Entrada (Input): Matriz 4 x 1 e ângulo
@@ -118,10 +118,10 @@ class C_LinearTransform:
 			T_z(x, y, z, w) = (x*cos(Theta) - y*sin(Theta), x*sin(Theta) + y*cos(Theta), z, 0)
 			
 			
-								| cos(Theta)	sen(Theta)	0	0 |		|	x	|
-			T(x, y, z, w) = 	| -sin(Theta)	cos(Theta)	0 	0 | * 	|	y	|
-								| 0				0			1 	0 |		|	z	|
-								| 0				0			0 	1 |		|	0	|
+								| cos(Theta)	sen(Theta)	0	0 |
+			T(x, y, z, w) = 	| -sin(Theta)	cos(Theta)	0 	0 | * 	M
+								| 0				0			1 	0 |
+								| 0				0			0 	1 |
 						
 						
 			Entrada (Input): Matriz 4 x 1 e ângulo
@@ -154,10 +154,10 @@ class C_LinearTransform:
 			T_scale(x, y, z, w) = (scale_x*x, scale_y*y, scale_z*z, 0)
 			
 			
-								| scale_x			0				0  			0 |		|	x	|
-			T(x, y, z, w) = 	| 0					scale_y			0  			0 |  * 	|	y	|
-								| 0					0				scale_z 	0 |		|	z	|
-								| 0					0				0 			1 |		|	0	|
+								| scale_x			0				0  			0 |
+			T(x, y, z, w) = 	| 0					scale_y			0  			0 |  * 	M
+								| 0					0				scale_z 	0 |
+								| 0					0				0 			1 |
 						
 						
 			Entrada (Input): Matriz 4 x 1 a escala
@@ -184,7 +184,7 @@ class C_LinearTransform:
 			
 			
 								| 1				0				0		-position_x |
-			T(x, y, z, w) = 	| 0				1				0		-position_y | 	* 	T
+			T(x, y, z, w) = 	| 0				1				0		-position_y | 	* 	M
 								| 0				0				1		-position_z |
 								| 0				0				0 		1			|
 						
@@ -212,10 +212,10 @@ class C_LinearTransform:
 			T_perspective(x, y, z, w) = (x, y, z, 0)
 			
 			
-								| d				0				0						0 								|		|	x	|
-			T(x, y, z, w) = 	| 0				d				0						0 								| 	* 	|	y	|
-								| 0				0				(-2 / (far - near))		0 								|		|	z	|
-								| 0				0				0						-(far + near) / (far - near)	|		|	1	|
+								| d				0				0						0 								|
+			T(x, y, z, w) = 	| 0				d				0						0 								| 	* 	M
+								| 0				0				(-2 / (far - near))		0 								|
+								| 0				0				0						-(far + near) / (far - near)	|
 						
 						
 			Entrada (Input): Matriz 4 x 1 a posição
