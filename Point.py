@@ -57,10 +57,16 @@ class C_Point:
 		return self.point[2][0]
 
 	def getScreenX(self):
-		return (self.getX() / self.getZ()) * self.factor + (self.screenSize[0] / 2)
+		# Usar essa com a outra matriz de projeção
+		#return (self.getX() / self.getZ()) * self.factor + (self.screenSize[0] / 2)
+
+		return (self.getX()) * self.factor + (self.screenSize[0] / 2)
 		
 	def getScreenY(self):
-		return (self.getY() / self.getZ()) * self.factor + (self.screenSize[1] / 2)
+		# Usar essa com a outra matriz de projeção
+		#return (self.getY() / self.getZ()) * self.factor + (self.screenSize[1] / 2)
+		
+		return (self.getY()) * self.factor + (self.screenSize[1] / 2)
 		
 	def getScreenZ(self):
 		return self.getZ() * self.factor

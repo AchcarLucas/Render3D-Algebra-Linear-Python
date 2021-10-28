@@ -32,10 +32,14 @@ class C_LinearTransform:
 		self.cam = cam
 
 		# constantes usados na projeção perspectiva
-		self.S = 1. / (np.tan((self.angleOfView) * self.Deg2Rad))
+		#self.S = 1. / (np.tan((self.angleOfView) * self.Deg2Rad))
 
-		self.r_3_3 = -2.0 / (self.far - self.near)
-		self.r_3_4 = (self.far + self.near) / (self.far - self.near)  
+		# Antiga projeção perspectiva
+		#self.r_3_3 = -2.0 / (self.far - self.near)
+		#self.r_3_4 = (self.far + self.near) / (self.far - self.near)
+
+		self.r_3_3 = -(self.far + self.near) / (self.far - self.near)
+		self.r_3_4 = -self.far*self.near*(self.far - self.near)
 
 	def rotateX(self, M, angle_degree):
 		'''
@@ -223,13 +227,23 @@ class C_LinearTransform:
 		'''
 		
 		# a matrix de posicionamento X, Y e Z é uma matrix de 4 linhas e 4 colunas
+
+		# Antiga projeção perspectiva
+		'''
 		M_PROJECTION =	[		
 							[self.S, 		0, 		0, 				0], 
 							[0, 		self.S, 	0, 				0], 
 							[0, 		0,			self.r_3_3, 	self.r_3_4], 
 							[0, 		0, 			-1, 			1]
 						]
-		
+		'''
+
+		M_PROJECTION =	[		
+							[1, 		0, 		0, 																0], 
+							[0, 		1, 		0, 																0], 
+							[0, 		0,		self.r_3_3, 													self.r_3_4], 
+							[0, 		0, 		-1, 															0]
+						]
 						
 		# faz a transformação linear da projeção perspectiva
 		return mtc.C_Matrix.mul(M_PROJECTION, M)
