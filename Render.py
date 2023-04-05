@@ -109,7 +109,8 @@ class C_Render:
 			# renderiza o ponto
 			if(self.Object[5]):
 				p.render(screen)
-
+				
+		# desenha as linhas
 		if(self.Object[6]):
 			for face in self.Object[1]:
 				len_face = len(face)
